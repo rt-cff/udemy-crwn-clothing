@@ -17,7 +17,7 @@ export const createUserProfileDocument = async(userAuth, additionalData) => {
 
     const userRef = firestore.doc(`users/${userAuth.uid}`)
     const snapShot = await userRef.get()
-console.log(userAuth, additionalData, snapShot.exists)
+
     if(!snapShot.exists) {
         const {displayName, email} = userAuth, createdAt = new Date()
 
@@ -51,7 +51,9 @@ provider.setCustomParameters({prompt: 'select_account'})
 export const signInWithGoogle = () => auth.signInWithPopup(provider)
 
 export const createUserWithEmailAndPassword = (email, password) => auth.createUserWithEmailAndPassword(email, password)
-export const signInWithEmailAndPassword = (email, password) => auth.signInWithEmailAndPassword(email, password)
+export const signInWithEmailAndPassword = async (email, password) => auth.signInWithEmailAndPassword(email, password)
+// will cause error with unknown reason
+// export const signInWithEmailAndPassword = auth.signInWithEmailAndPassword
 
 export default firebase
 
