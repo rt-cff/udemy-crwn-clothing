@@ -8,7 +8,7 @@ import HomePage from './pages/homepage/homepage.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component'
 import ShopPage from './pages/shop/shop.component';
 
-import {auth} from './firebase/firebase.utils'
+import {auth, createUserProfileDocument} from './firebase/firebase.utils'
 
 const Hats = () => (<h1>HATS</h1>)
 
@@ -23,10 +23,31 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      console.log(user)
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      if(userAuth) {
+        const userRef = await createUserProfileDocument(userAuth)
+        
+        //Display Name is being updated in an async way, which we would have to use onSnapshot to get the update
+        userRef.onSnapshot(snapshot => {
+          this.setState({currentUser: {
+            id: snapshot.id, 
+            ...snapshot.data(), 
+          }}, () => {
+            console.log(this.state)
+          })
+        })
 
-      this.setState({currentUser: user})
+        // Using .get will not create a listener and streaming like onSnapshot
+        // const snapshot = await userRef.get()
+        // this.setState({currentUser: {
+        //   id: snapshot.id, 
+        //   ...snapshot.data(), 
+        // }}, () => {
+        //   console.log(this.state)
+        // })
+      }
+      else
+        this.setState({currentUser: null})
     })
   }
 
