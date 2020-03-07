@@ -4,12 +4,12 @@ import {createStructuredSelector} from 'reselect'
 
 import {selectCollections} from '../../redux/shop/shop.selector'
 
-import PreviewCollection from '../../components/preview-collection/preview-collection.component' 
+import CollectoinPreview from '../../components/collection-preview/collection-preview.component' 
 
 const Shop = ({collections}) => (
     <div>
         SHOP PAGE
-        {collections.map(({id, ...collectionProps}) => (<PreviewCollection key = {id} {...collectionProps}/>))}
+        {collections.map(({id, ...collectionProps}) => (<CollectoinPreview key = {id} {...collectionProps}/>))}
     </div>
 )
 
