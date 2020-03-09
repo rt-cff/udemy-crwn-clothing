@@ -3,14 +3,16 @@ import Directory from '../../components/directory/directory.component'
 
 import './homepage.styles.scss';
 
+import {HomePageContainer} from './homepage.styles'
+
 class HomePage extends Component {
     render() {
         return (
-            <div className = 'homepage'>
+            <HomePageContainer>
                 <div className = 'directory-menu'>
                     <Directory />
                 </div>
-            </div>
+            </HomePageContainer>
         )
     }
 }
