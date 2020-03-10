@@ -55,5 +55,34 @@ export const signInWithEmailAndPassword = async (email, password) => auth.signIn
 // will cause error with unknown reason
 // export const signInWithEmailAndPassword = auth.signInWithEmailAndPassword
 
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+    const collectionRef = firestore.collection(collectionKey)
+    const batch = firestore.batch()
+
+    objectsToAdd.forEach(obj => {
+        batch.set(collectionRef.doc(), obj)
+    })
+
+    await batch.commit()
+}
+
+export const convertCollectionSnapshotToMap = collections => {
+    const transformedCollection = collections.docs.map(doc => {
+        const {title, items} = doc.data()
+
+        return {
+            title, 
+            routeName: encodeURI(title.toLowerCase()), 
+            id: doc.id, 
+            items, 
+        }
+    })
+
+    return transformedCollection.reduce((obj, collection) => ({
+        ...obj, 
+        [collection.title.toLowerCase()]: collection, 
+    }), {})
+}
+
 export default firebase
 
