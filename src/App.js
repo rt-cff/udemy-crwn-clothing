@@ -21,30 +21,30 @@ class App extends React.Component {
   componentDidMount() {
     const {setCurrentUser, collectionsArray} = this.props
 
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      if(userAuth) {
-        const userRef = await createUserProfileDocument(userAuth)
+    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+    //   if(userAuth) {
+    //     const userRef = await createUserProfileDocument(userAuth)
         
-        //Display Name is being updated in an async way, which we would have to use onSnapshot to get the update
-        userRef.onSnapshot(snapshot => {
-          setCurrentUser({
-            id: snapshot.id, 
-            ...snapshot.data(), 
-          })
-        })
+    //     //Display Name is being updated in an async way, which we would have to use onSnapshot to get the update
+    //     userRef.onSnapshot(snapshot => {
+    //       setCurrentUser({
+    //         id: snapshot.id, 
+    //         ...snapshot.data(), 
+    //       })
+    //     })
 
-        // Using .get will not create a listener and streaming like onSnapshot
-        // const snapshot = await userRef.get()
-        // this.setState({currentUser: {
-        //   id: snapshot.id, 
-        //   ...snapshot.data(), 
-        // }}, () => {
-        //   console.log(this.state)
-        // })
-      }
-      else
-        setCurrentUser(null)
-    })
+    //     // Using .get will not create a listener and streaming like onSnapshot
+    //     // const snapshot = await userRef.get()
+    //     // this.setState({currentUser: {
+    //     //   id: snapshot.id, 
+    //     //   ...snapshot.data(), 
+    //     // }}, () => {
+    //     //   console.log(this.state)
+    //     // })
+    //   }
+    //   else
+    //     setCurrentUser(null)
+    // })
 
     //addCollectionAndDocuments('collections', collectionsArray.map(({title, items}) => ({title, items})))
   }

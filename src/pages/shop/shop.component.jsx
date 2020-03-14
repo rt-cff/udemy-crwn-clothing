@@ -5,7 +5,7 @@ import {createStructuredSelector} from 'reselect'
 
 import {updateColelctions} from '../../redux/shop/shop.actions'
 
-import {fetchCollectionStartAsync} from '../../redux/shop/shop.actions'
+import {fetchCollectionStart, fetchCollectionStartAsync} from '../../redux/shop/shop.actions'
 import {selectIsCollectionFetching} from '../../redux/shop/shop.selector'
 
 import CollectionOverview from '../../components/collection-overview/collection-overview.component' 
@@ -67,7 +67,8 @@ class Shop extends Component {
 
 const mapDispatchToProps = dispatch => ({
     updateCollections: collectionsMap => dispatch(updateColelctions(collectionsMap)), 
-    fetchCollectionStartAsync: () => dispatch(fetchCollectionStartAsync()), 
+    // fetchCollectionStartAsync: () => dispatch(fetchCollectionStartAsync()), 
+    fetchCollectionStartAsync: () => dispatch(fetchCollectionStart()), 
 })
 
 export default connect(null, mapDispatchToProps)(Shop)

@@ -1,8 +1,15 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
+
 import FormInput from '../form-input/form-input.component'
 import CustomButton from '../custom-button/custom-button.component'
 
 import {signInWithGoogle, signInWithEmailAndPassword} from '../../firebase/firebase.utils'
+
+import {googleSignInStart, emailSignInStart} from '../../redux/user/user.actions'
+
+import {takeLatest, call, put} from 'redux-saga/effects'
+
 
 import './sign-in.styles.scss'
 
@@ -19,14 +26,19 @@ class SignIn extends Component {
     handleSubmit = async e => {
         e.preventDefault()
         
-        const {email, password} = this.state
+        // const {email, password} = this.state
         
-        try {
-            await signInWithEmailAndPassword(email, password)
-            this.setState({email: '', password: ''})
-        } catch(error) {
-            console.log(error)
-        }
+        // try {
+        //     await signInWithEmailAndPassword(email, password)
+        //     this.setState({email: '', password: ''})
+        // } catch(error) {
+        //     console.log(error)
+        // }
+
+        const {email, password} = this.state
+
+        this.props.dispatch(emailSignInStart([email, password]))
+        this.setState({email: '', password: ''})
     }
 
     handleChange = e => {
@@ -49,7 +61,7 @@ class SignIn extends Component {
 
                     <div className = 'buttons'>
                         <CustomButton type = 'submit'>Sign In</CustomButton>
-                        <CustomButton isGoogleSignIn onClick = {signInWithGoogle}>
+                        <CustomButton type = 'button' isGoogleSignIn onClick = {() => this.props.dispatch(googleSignInStart())}>
                             {' '}
                             Sign In With Google{' '}
                         </CustomButton>
@@ -60,4 +72,4 @@ class SignIn extends Component {
     }
 }
 
-export default SignIn
+export default connect()(SignIn)
