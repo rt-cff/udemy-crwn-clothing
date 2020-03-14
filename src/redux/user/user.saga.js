@@ -51,7 +51,7 @@ export function* emailSignInStart() {
 
 export function* userSaga() {
     yield all([
-        takeLatest(UserActionTypes.GOOGLE_SIGN_IN_START, googleSignInStartAsync), 
-        takeLatest(UserActionTypes.EMAIL_SIGN_IN_START, emailSignInStartAsync), 
+        call(googleSignInStart), 
+        call(emailSignInStart), 
     ])
 }
