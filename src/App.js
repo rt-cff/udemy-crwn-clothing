@@ -15,6 +15,8 @@ import CheckoutPage from './pages/checkout/checkout.component';
 
 import {auth, createUserProfileDocument, addCollectionAndDocuments} from './firebase/firebase.utils'
 
+import {checkUserSession} from './redux/user/user.actions'
+
 class App extends React.Component {
   unsubscribeFromAuth = null
 
@@ -47,10 +49,12 @@ class App extends React.Component {
     // })
 
     //addCollectionAndDocuments('collections', collectionsArray.map(({title, items}) => ({title, items})))
+
+    this.props.checkUserSession()
   }
 
   componentWillUnmount() {
-    this.unsubscribeFromAuth()
+    // this.unsubscribeFromAuth()
   }
 
   render() {
@@ -78,7 +82,8 @@ const mapStateToProps = ({user, shop}) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
+  setCurrentUser: user => dispatch(setCurrentUser(user)), 
+  checkUserSession: () => dispatch(checkUserSession()), 
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
