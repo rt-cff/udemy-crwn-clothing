@@ -8,14 +8,14 @@ import CartDropdown from '../cart-dropdown/cart-dropdown.copmonent'
 
 import {selectCartHidden} from '../../redux/cart/cart.selector'
 import {selectCurrentUser} from '../../redux/user/user.selector'
-import {auth} from '../../firebase/firebase.utils'
+import {signOutStart} from '../../redux/user/user.actions'
 
 import {ReactComponent as Logo} from '../../assets/crown.svg'
 import './header.styles.scss'
 
 import {HeaderContainer, LogoContainer, OptionsContainer, OptionLink, OptionContainer} from './header.styles'
 
-const Header = ({currentUser, cartDropdownHidden}) => (
+const Header = ({currentUser, cartDropdownHidden, dispatch}) => (
     <HeaderContainer>
         <LogoContainer to="/"><Logo className = 'logo'/></LogoContainer>
         <OptionsContainer>
@@ -23,7 +23,7 @@ const Header = ({currentUser, cartDropdownHidden}) => (
             <OptionLink to="/contact">CONTACT</OptionLink>
             {currentUser ? currentUser.displayName : null}
             {   currentUser ?
-                <OptionLink as = 'div' onClick = {() => auth.signOut()}>SIGN OUT</OptionLink> :
+                <OptionLink as = 'div' onClick = {() => dispatch(signOutStart())}>SIGN OUT</OptionLink> :
                 <OptionLink to="/signin">SIGN IN</OptionLink>
             }
             <CartIcon />

@@ -55,6 +55,8 @@ export const signInWithEmailAndPassword = async (email, password) => auth.signIn
 // will cause error with unknown reason
 // export const signInWithEmailAndPassword = auth.signInWithEmailAndPassword
 
+export const signOut = () => auth.signOut()
+
 export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
     const collectionRef = firestore.collection(collectionKey)
     const batch = firestore.batch()
