@@ -1,10 +1,8 @@
 import {UserActionTypes} from './user.types'
+import {fetchCollectionFailure, signInSuccess, signInFailure} from './user.actions'
+
 import {firestore, createUserProfileDocument, signInWithEmailAndPassword, signInWithGoogle} from '../../firebase/firebase.utils'
-import {GOOGLE_SIGN_IN_SUCCESS, fetchCollectionFailure} from './user.actions'
 import {takeLatest, call, put, all} from 'redux-saga/effects'
-
-import {googleSignInSuccess, emailSignInSuccess, googleSignInFailure, emailSignInFailure} from './user.actions'
-
 
 function* getUserProfile(userAuth) {
     const userRef = yield createUserProfileDocument(userAuth)
@@ -23,9 +21,9 @@ function* googleSignInStartAsync() {
         const {user} = yield call(signInWithGoogle)
         const userProfile = yield getUserProfile(user)
 
-        yield put(googleSignInSuccess(userProfile))
+        yield put(signInSuccess(userProfile))
     }catch(errorMessage) {
-        yield put(googleSignInFailure(errorMessage))
+        yield put(signInFailure(errorMessage))
     }
 }
 
@@ -36,9 +34,9 @@ function* emailSignInStartAsync({payload: [email, password]}) {
         const {user} = yield call(signInWithEmailAndPassword, email, password,)
         const userProfile = yield call(getUserProfile, user)
 
-        yield put(emailSignInSuccess(userProfile))
+        yield put(signInSuccess(userProfile))
     }catch(errorMessage) {
-        yield put(emailSignInFailure(errorMessage))
+        yield put(signInFailure(errorMessage))
     }
 }
 
