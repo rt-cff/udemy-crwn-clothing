@@ -5,12 +5,16 @@ import {firestore, createUserProfileDocument, createUserWithEmailAndPassword, si
 import {takeLatest, call, put, all} from 'redux-saga/effects'
 
 function* getUserProfile(userAuth, additionalData) {
-    const userRef = yield createUserProfileDocument(userAuth, additionalData)
-    const snapshot = yield userRef.get()
-
-    return {
-        id: snapshot.id, 
-        ...snapshot.data(), 
+    try {
+        const userRef = yield call(createUserProfileDocument, userAuth, additionalData)
+        const snapshot = yield userRef.get()
+    
+        yield put(signInSuccess({
+            id: snapshot.id, 
+            ...snapshot.data(), 
+        }))
+    }catch(errorMessage) {
+        yield put(signInFailure(errorMessage))
     }
 }
 
@@ -19,9 +23,8 @@ function* googleSignInStartAsync() {
 
     try {
         const {user} = yield call(signInWithGoogle)
-        const userProfile = yield getUserProfile(user)
-
-        yield put(signInSuccess(userProfile))
+        
+        yield getUserProfile(user)
     }catch(errorMessage) {
         yield put(signInFailure(errorMessage))
     }
@@ -32,9 +35,8 @@ function* emailSignInStartAsync({payload: [email, password]}) {
 
     try {
         const {user} = yield call(signInWithEmailAndPassword, email, password,)
-        const userProfile = yield call(getUserProfile, user)
-
-        yield put(signInSuccess(userProfile))
+        
+        yield call(getUserProfile, user)
     }catch(errorMessage) {
         yield put(signInFailure(errorMessage))
     }
@@ -76,9 +78,7 @@ function* onSignUp({payload: {email, password, displayName}}) {
 
 function* onSignUpSuccessFtn({payload: {user, displayName}}) {
     try {
-        const userProfile = yield getUserProfile(user, {displayName})
-
-        yield put(signInSuccess(userProfile))
+        yield call(getUserProfile, user, {displayName})
     }catch(errorMessage) {
         yield put(signInFailure(errorMessage))
     }
