@@ -19,3 +19,7 @@ export const EmptyItemFromCart = (item) => ({
     type: CartActionTypes.EMPTY_ITEM_FROM_CART, 
     payload: item, 
 })
+
+export const emptyCart = () => ({
+    type: CartActionTypes.EMPTY_CART, 
+})

@@ -31,6 +31,12 @@ const cartReducer = (state = INIT_STATE, action) => {
                 ...state, 
                 cartItems: emptyItemFromCart(state.cartItems, action.payload)
             }
+        
+        case CartActionTypes.EMPTY_CART:
+            return {
+                ...state, 
+                cartItems: [], 
+            }
 
         default:
             return state
