@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, useState, useEffect} from 'react'
 import {Route} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
@@ -19,7 +19,20 @@ import {firestore, convertCollectionSnapshotToMap} from '../../firebase/firebase
 const CollectionOverviewWithSpinner = WithSpinner(CollectionOverview)
 const CollectionPageWithSpinner = WithSpinner(CollectionPage)
 
-class Shop extends Component {
+const Shop = ({match, fetchCollectionStartAsync}) => {
+    useEffect(() => {
+        fetchCollectionStartAsync()
+    }, [])
+
+    return (
+        <div className = 'shop-page'>
+            <Route exact path = {match.path} component = {CollectionOverviewContainer} />
+            <Route path = {`${match.path}/:collectionId`} component = {CollectionPageContainer}/>
+        </div> 
+    )
+}
+
+class _Shop extends Component {
     state = {
         loading: true
     }

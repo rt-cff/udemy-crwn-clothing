@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux'
 
@@ -17,7 +17,29 @@ import {auth, createUserProfileDocument, addCollectionAndDocuments} from './fire
 
 import {checkUserSession} from './redux/user/user.actions'
 
-class App extends React.Component {
+const App = ({loggedIn, checkUserSession}) => {
+  useEffect(() => {
+    checkUserSession()
+  }, [checkUserSession])
+
+  return (
+    <div className="App">
+      <Header/>
+      <Switch>
+        <Route exact path = '/' component = {HomePage}/>
+        <Route path = '/shop' component = {ShopPage}/>
+        <Route exact path = '/checkout' component = {CheckoutPage}/>
+        {/*<Route exact path = '/signin' component = {SignInAndSignUpPage}/>*/}
+        <Route exact path = '/signin'>
+          {loggedIn ? <Redirect to = '/'/> : <SignInAndSignUpPage/>}
+        </Route>
+        
+      </Switch>
+    </div>
+  )
+}
+
+class _App extends React.Component {
   unsubscribeFromAuth = null
 
   componentDidMount() {

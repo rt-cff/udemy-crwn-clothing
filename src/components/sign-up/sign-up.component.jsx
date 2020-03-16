@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, useState} from 'react'
 import FormInput from '../form-input/form-input.component'
 import CustomButton from '../custom-button/custom-button.component'
 import {connect} from 'react-redux'
@@ -8,7 +8,59 @@ import {auth, createUserWithEmailAndPassword, createUserProfileDocument} from '.
 
 import './sign-up.styles.scss'
 
-class SignUp extends Component {
+const SignUp = ({dispatch}) => {
+    const [state, setState] = useState({ 
+        displayName: '',
+        email: '', 
+        password: '', 
+        confirmPassword: '',
+    })
+    const {displayName, email, password, confirmPassword} = state
+    
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        if(password !== confirmPassword) {
+            alert('password don\'t match')
+        }
+
+        dispatch(signUpStart(email, password, displayName))
+
+        setState({
+            displayName: '',
+            email: '', 
+            password: '', 
+            confirmPassword: '',
+        })
+    }
+
+    const handleChange = (e) => {
+        const {name, value} = e.target
+
+        setState({...state, [name]: value})
+    }
+
+    return (
+        <div className = 'sign-up'>
+            <h2 className = 'title'>I do not have an account</h2>
+            <span>Sign up with your email and password</span>
+            
+            <form onSubmit = {handleSubmit}>
+                <FormInput label = 'Display Name' name = 'displayName' type = 'text' value = {displayName} handleChange = {handleChange} required/>
+                <FormInput label = 'Email' name = 'email' type = 'email' value = {email} handleChange = {handleChange} required/>
+                <FormInput label = 'Password' name = 'password' type = 'password' value = {password} handleChange = {handleChange} required/>
+                <FormInput label = 'Confirm Password' name = 'confirmPassword' type = 'password' value = {confirmPassword} handleChange = {handleChange} required/>
+
+                <div className = 'buttons'>
+                    <CustomButton type = 'submit'>Sign Up</CustomButton>
+                </div>
+            </form>
+        </div>
+    )
+}
+
+
+class _SignUp extends Component {
     constructor(props) {
         super(props)
 
