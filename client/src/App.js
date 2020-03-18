@@ -17,14 +17,18 @@ import {auth, createUserProfileDocument, addCollectionAndDocuments} from './fire
 
 import {checkUserSession} from './redux/user/user.actions'
 
-const App = ({loggedIn, checkUserSession}) => {
+import CurrentUserContext from './context/current-user/current-user.context'
+
+const App = ({loggedIn, checkUserSession, currentUser}) => {
   useEffect(() => {
     checkUserSession()
   }, [checkUserSession])
 
   return (
     <div className="App">
-      <Header/>
+      <CurrentUserContext.Provider value = {currentUser}>
+        <Header/>
+      </CurrentUserContext.Provider>
       <Switch>
         <Route exact path = '/' component = {HomePage}/>
         <Route path = '/shop' component = {ShopPage}/>
@@ -100,6 +104,7 @@ class _App extends React.Component {
 
 const mapStateToProps = ({user, shop}) => ({
   loggedIn: !!user.currentUser, 
+  currentUser: user.currentUser, 
   collectionsArray: selectCollectionsForPreview({shop}), 
 })
 
