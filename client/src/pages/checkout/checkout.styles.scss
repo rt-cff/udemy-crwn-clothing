@@ -20,6 +20,15 @@
         &:last-child {
           width: 8%;
         }
+
+        @media screen and (max-width: 800px) { 
+          text-transform: capitalize;
+          width: 20%;
+    
+          &:last-child {
+            width: 10%;
+          }
+        }
       }
     }
   
@@ -41,4 +50,25 @@
       color: red;
     }
   }
+
+  @media screen and (max-width: 800px) {
+    .checkout-page { 
+      margin: 20px auto 0;
+      width: 90vw;
+      text-align: center;
+
+      .total {
+        // text-align: center;
+        margin: 0 auto;
+        margin-top: 10px;
+      }
   
+      button {
+        margin: 10px auto;
+      }
+  
+      .test-warning {
+        margin-top: 15px;
+      }
+    }
+  }

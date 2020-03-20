@@ -5,6 +5,12 @@
   justify-content: space-between;
   margin-bottom: 25px;
 
+  @media screen and (max-width: 800px) {
+    height: 60px;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+
   .logo-container {
     height: 100%;
     width: 70px;

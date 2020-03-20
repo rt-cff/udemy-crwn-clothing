@@ -10,5 +10,21 @@
     .buttons {
         display: flex;
         justify-content: space-between;
+        
+        
+    }
+
+    @media screen and (max-width: 800px) {
+        width: 90vw;
+        text-align: center;
+        margin-bottom: 20px;
+        
+        .group, .form-input {
+            margin: 25px 0;
+        }
+
+        .buttons {
+            flex-direction: column;
+        }
     }
 }

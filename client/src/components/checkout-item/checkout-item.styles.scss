@@ -38,5 +38,28 @@
       padding-left: 12px;
       cursor: pointer;
     }
+
+    @media screen and (max-width: 800px) {
+      justify-content: space-between;
+    
+      .image-container {
+        width: 20%;
+        padding-right: 5px;
+      }
+      .name, .quantity, .price {
+        width: 20%;
+      }
+    
+      .quantity {
+        justify-content: center;  
+        .value {
+          margin: 0 5px;
+        }
+      }
+    
+      .remove-button {
+        width: 10%;
+      }
+    }
   }
   

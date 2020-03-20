@@ -2,7 +2,8 @@ import React, {useEffect} from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux'
 
-import './App.css';
+// import './App.css';
+import {GlobalStyle} from './global.styles'
 
 import {setCurrentUser} from './redux/user/user.actions'
 import {selectCollectionsForPreview} from './redux/shop/shop.selector'
@@ -26,6 +27,7 @@ const App = ({loggedIn, checkUserSession, currentUser}) => {
 
   return (
     <div className="App">
+      <GlobalStyle />
       <CurrentUserContext.Provider value = {currentUser}>
         <Header/>
       </CurrentUserContext.Provider>
